@@ -1,16 +1,31 @@
 <template>
-  <div>
-    <header>
-      my Trello
-    </header>
-    <main>
-      <p class="info-line">All: 0 tasks</p>
-    </main>
+  <div class="list">
+    <div class="listheader">
+      <p class="list-title">{{ title }}</p>
+      <div class="deletelist" @click="removeList">×</div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  props:{
+    title:{
+      type: String,
+      required: true,
+    },
+    listindex:{
+      type: Number,
+      required: true,
+    },
+  },
+  methods:{
+    removeList: function(){
+      if(confirm('本当にこのリストを削除しますか？')){
+        this.$store.dispatch('removelist', {listIndex:this.listIndex})
+      }
+    }
+  }
 }
 </script>
 
