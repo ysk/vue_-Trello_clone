@@ -45,7 +45,9 @@ const store = new Vuex.Store({
     removelist(context, payload){
       context.commit('removelist', payload)
     },
-
+    addCardToList(context, payload) {
+      context.commit('addCardToList', payload)
+    },
   },
   getters: {
   }
