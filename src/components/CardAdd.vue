@@ -1,14 +1,14 @@
 <template>
-<form class="addcard" @submit.prevent="addCardToList">
-  <input v-model="body" 
-      type="text" 
+<form :class="classList" @submit.prevent="addCardToList">
+  <input type="text" 
       class="text-input" 
+      v-model="body" 
       placeholder="Add new card" 
       @focusin="startEditing"
       @focusout="finishEditing"
   />
   <button type="submit" 
-          class="add-button" 
+          class="add-button"
           v-if="isEditing || bodyExists">
     Add
   </button>
@@ -17,7 +17,7 @@
 <script>
 export default {
   props:{
-    listindex: {
+    listIndex: {
       type: Number,
       required: true
     }
@@ -39,7 +39,7 @@ export default {
       }
       return classList;
     },
-    bodyExists() {
+    bodyExists(){
       return this.body.length > 0
     }
   },
@@ -51,7 +51,7 @@ export default {
       this.isEditing = false
     },
     addCardToList: function(){
-      this.$store.dispatch('addCardToList', {body:this.body, listindex:this.listindex})
+      this.$store.dispatch('addCardToList', { body: this.body, listIndex: this.listIndex })
       this.body = ''
     }
   }
