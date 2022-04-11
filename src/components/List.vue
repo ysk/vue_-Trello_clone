@@ -2,26 +2,33 @@
   <div class="list">
     <div class="listheader">
       <p class="list-title">{{ title }}</p>
+      <p class="list-counter">total: {{ totalCardInList }}</p>
       <div class="deletelist" @click="removeList">×</div>
     </div>
-    <card v-for="(item, index) in cards"
-        :body="item.body" 
-        :key="item.id" 
-        :cardIndex="index" 
-        :listIndex="listIndex"
-    />
-    <card-add :listIndex="listIndex" />
+    <draggable group="cards" 
+          :list="cards" 
+          @end="$emit('change')">
+      <card v-for="(item, index) in cards"
+          :body="item.body" 
+          :key="item.id" 
+          :cardIndex="index" 
+          :listIndex="listIndex"
+      />
+      <card-add :listIndex="listIndex"/>
+    </draggable>
   </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
 import CardAdd from './CardAdd.vue';
 import Card from './Card.vue';
 
 export default {
   components: {
     CardAdd,
-    Card
+    Card,
+    draggable
   },
   props:{
     title:{
@@ -36,6 +43,11 @@ export default {
       type: Number,
       required: true,
     },
+  },
+  computed:{
+    totalCardInList(){
+      return this.cards.length;
+    }
   },
   methods:{
     removeList: function(){
